@@ -1,4 +1,4 @@
 #pragma once
 
-//teste clasa Repo(include si clasa Cheltuieli)
+//teste pentru functiile programului
 void teste();
