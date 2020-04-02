@@ -22,13 +22,13 @@ void constructoriCheltuiala() {
 	//constructori pe obiecte dinamice
 	Cheltuiala* pc1;
 	pc1 = new Cheltuiala; //constructor implicit
-	assert((pc1->getNumar() == 0) && (pc1->getSuma() == 0) && (pc1->getTip() == NULL));
+	assert((pc1->getID() == -1) && (pc1->getNumar() == 0) && (pc1->getSuma() == 0) && (pc1->getTip() == NULL));
 
 	Cheltuiala* pc2 = new Cheltuiala(1, 6, 120, tip); //constructor cu parametri
-	assert((pc2->getNumar() == 6) && (pc2->getSuma() == 120) && (strcmp(pc2->getTip(), tip) == 0));
+	assert((pc2->getID() == 1) && (pc2->getNumar() == 6) && (pc2->getSuma() == 120) && (strcmp(pc2->getTip(), tip) == 0));
 
 	Cheltuiala* pc3 = new Cheltuiala(*pc2); //constructor de copiere
-	assert((pc3->getNumar() == 6) && (pc3->getSuma() == 120) && (strcmp(pc3->getTip(), "gaz") == 0));
+	assert((pc3->getID() == 1) && (pc3->getNumar() == 6) && (pc3->getSuma() == 120) && (strcmp(pc3->getTip(), "gaz") == 0));
 
 	if (pc1 != NULL) {
 		delete pc1; //se apeleaza destructorul
@@ -51,19 +51,21 @@ void setGetCheltuiala() {
 	strcpy_s(tip, sizeof"caldura", "caldura");
 
 	Cheltuiala c;
+	c.setID(4);
 	c.setNumar(6);
 	c.setSuma(2000);
 	c.setTip(tip);
-	assert((c.getNumar() == 6) && (c.getSuma() == 2000) && (strcmp(c.getTip(), "caldura") == 0));
+	assert((c.getID() == 4) && (c.getNumar() == 6) && (c.getSuma() == 2000) && (strcmp(c.getTip(), "caldura") == 0));
 
 	char* tip2 = new char[4];
 	strcpy_s(tip2, sizeof"apa", "apa");
 
 	Cheltuiala* pc = new Cheltuiala;
+	pc->setID(5);
 	pc->setNumar(2);
 	pc->setSuma(1200);
 	pc->setTip(tip2);
-	assert((pc->getNumar() == 2) && (pc->getSuma() == 1200) && (strcmp(pc->getTip(), "apa") == 0));
+	assert((pc->getID() == 5) && (pc->getNumar() == 2) && (pc->getSuma() == 1200) && (strcmp(pc->getTip(), "apa") == 0));
 	if (pc != NULL) {
 		delete pc;
 		pc = NULL;
@@ -83,9 +85,9 @@ void egalCheltuiala() {
 	Cheltuiala c1(1, 1, 200, tip1);
 	Cheltuiala c2(2, 2, 256, tip2);
 
-	assert((c1.getNumar() == 1) && (c1.getSuma() == 200) && (strcmp(c1.getTip(), tip1) == 0));
+	assert((c1.getID() == 1) && (c1.getNumar() == 1) && (c1.getSuma() == 200) && (strcmp(c1.getTip(), tip1) == 0));
 	c1 = c2;
-	assert((c1.getNumar() == 2) && (c1.getSuma() == 256) && (strcmp(c1.getTip(), tip2) == 0));
+	assert((c1.getID() == 2) && (c1.getNumar() == 2) && (c1.getSuma() == 256) && (strcmp(c1.getTip(), tip2) == 0));
 	delete[] tip1;
 	delete[] tip2;
 }
@@ -95,7 +97,7 @@ void egalitateCheltuieli() {
 	char* tip = new char[4];
 	strcpy_s(tip, sizeof"gaz", "gaz");
 
-	Cheltuiala c1(1, 1, 867, tip);
+	Cheltuiala c1(3, 1, 867, tip);
 	Cheltuiala c2(c1);
 
 	assert((c1 == c2) == true);
@@ -170,14 +172,16 @@ void deleteCheltuialaRepo() {
 	strcpy_s(tip1, sizeof"gaz", "gaz");
 	strcpy_s(tip2, sizeof"caldura", "caldura");
 	Cheltuiala c1(1, 1, 24, tip1);
-	Cheltuiala c2(2, 2, 16, tip2);
+	Cheltuiala c2(1, 2, 16, tip2);
+	c1.setID(1);
+	c2.setID(2);
 	
 	Repo r;
 	r.addCheltuiala(c1);
 	r.addCheltuiala(c2);
 	assert(r.getSize() == 2);
 	
-	r.deleteCheltuiala(c1);
+	r.deleteCheltuiala(1);
 	Cheltuiala* lista = r.getAll();
 	assert((r.getSize() == 1) && (lista[0] == c2));
 
@@ -186,8 +190,8 @@ void deleteCheltuialaRepo() {
 }
 
 void updateCheltuialaRepo() {
-	Cheltuiala c1(1, 1, 12, "gaz");
-	Cheltuiala c2(2, 2, 2000, "caldura");
+	Cheltuiala c1(3, 1, 12, "gaz");
+	Cheltuiala c2(4, 2, 2000, "caldura");
 	
 	Repo r;
 	r.addCheltuiala(c1);
@@ -200,8 +204,8 @@ void updateCheltuialaRepo() {
 
 //Desc: testeaza overload-ul operatorului egal asupra clasei Repo
 void egalRepo() {
-	Cheltuiala c1(1, 4, 13, "apa");
-	Cheltuiala c2(2, 7, 85, "gaz");
+	Cheltuiala c1(5, 4, 13, "apa");
+	Cheltuiala c2(6, 7, 85, "gaz");
 	Repo r;
 	r.addCheltuiala(c1);
 	r.addCheltuiala(c2);
@@ -228,7 +232,7 @@ void constructoriService() {
 
 	Repo r;
 	Cheltuiala c1(1, 1, 256, "gaz");
-	Cheltuiala c2(2, 2, 1000, "caldura");
+	Cheltuiala c2(3, 2, 1000, "caldura");
 	r.addCheltuiala(c1);
 	r.addCheltuiala(c2);
 
@@ -270,13 +274,13 @@ void getService() {
 //Desc: testeaza functia de a adauga o cheltuiala din Service
 void addCheltService() {
 	Repo r;
-	Cheltuiala c1(1, 1, 27, "gaz");
-	Cheltuiala c2(2, 2, 156, "caldura");
+	Cheltuiala c1(0, 1, 27, "gaz");
+	Cheltuiala c2(1, 2, 156, "caldura");
 	
 	Service s(r);
 	assert(s.getSize() == 0);
-	s.addChelt(c1);
-	s.addChelt(c2);
+	s.addChelt(1, 27, "gaz");
+	s.addChelt(2, 156, "caldura");
 	Cheltuiala* lista = s.getAll();
 	assert((s.getSize() == 2) && (lista[0] == c1) && (lista[1] == c2));
 }
@@ -291,7 +295,7 @@ void updateCheltService() {
 
 	Service s(r);
 	s.updateChelt(1, 31, 4000, "electricitate");
-	Cheltuiala c3(2, 31, 4000, "electricitate");
+	Cheltuiala c3(1, 31, 4000, "electricitate");
 	Cheltuiala* lista = s.getAll();
 	assert(lista[1] == c3);
 }
@@ -300,13 +304,15 @@ void updateCheltService() {
 void deleteCheltService() {
 	Cheltuiala c1(1, 1, 95, "gaz");
 	Cheltuiala c2(2, 3, 156, "caldura");
+	c1.setID(1);
+	c2.setID(2);
 	Repo r;
 	r.addCheltuiala(c1);
 	r.addCheltuiala(c2);
 
 	Service s(r);
 	assert(s.getSize() == 2);
-	assert(s.delChelt(c1) == 1);
+	assert(s.delChelt(1) == 1);
 	Cheltuiala* lista = s.getAll();
 	assert((s.getSize() == 1) && lista[0] == c2);
 }

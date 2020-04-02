@@ -57,12 +57,12 @@ void Repo::updateCheltuiala(int id, int numar, int suma, const char* tip) {
 }
 
 //Desc: sterge o cheltuiala din Repo
-//In: un obiect c de tip Cheltuiala
+//In: id, int - ID-ul chesltuielii care trebuie sterse
 //Out: 1, daca obiectul a fost sters cu succes, 0 altfel
-int Repo::deleteCheltuiala(Cheltuiala c) {
+int Repo::deleteCheltuiala(int id) {
 	int indice = -1;
 	for (int i = 0; i < this->n; i++)
-		if (this->cheltuieli[i] == c)
+		if (this->cheltuieli[i].getID() == id)
 			indice = i;
 	if (indice == -1)
 		return 0;
@@ -77,8 +77,13 @@ int Repo::deleteCheltuiala(Cheltuiala c) {
 //Desc: acceseaza lista de cheltuieli unui repo
 //In: un obiect de tip repo
 //Out: lista de cheltuieli
-Cheltuiala* Repo::getAll() {
-	return this->cheltuieli;
+Cheltuiala* Repo::getAll(int id) {
+	if (id == -1)
+		return this->cheltuieli;
+	for (int i = 0; i < this->n; i++)
+		if (this->cheltuieli[i].getID() == id)
+			return &this->cheltuieli[i];
+	return NULL;
 }
 
 //Desc: acceseaza lungimea listei de cheltuieli unui repo

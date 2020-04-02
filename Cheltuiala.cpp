@@ -12,7 +12,8 @@ Cheltuiala::Cheltuiala() {
 }
 
 //Desc: creeaza un obiect de tip Cheltuiala
-//In: nr, int - numarul cheltuielii
+//In: id, int - ID-ul cheltuielii
+//	  nr, int - numarul cheltuielii
 //	  suma, int - suma cheltuielii
 //    tip, char* - tipul cheltuielii
 //Out: o instanta a clasei Cheltuiala cu atributele nr, suma, tip
@@ -81,7 +82,7 @@ void Cheltuiala::setTip(const char* tip)
 
 //Desc: Acceseaza id-ul apartamentului unei cheltuieli
 //In: o cheltuiala
-//Out: it-ul cheltuielii
+//Out: id-ul cheltuielii
 int Cheltuiala::getID() {
 	return this->id;
 }
@@ -135,8 +136,6 @@ bool Cheltuiala::operator==(const Cheltuiala& c) {
 //In: un stream de intrare
 //Out: un obiect nou de tip Cheltuiala
 istream& operator>>(istream& is, Cheltuiala& c) {
-	cout << "id = ";
-	is >> c.id;
 	cout << "numar = ";
 	is >> c.numar;
 	cout << "suma = ";

@@ -1,12 +1,17 @@
 #include <iostream>
 #include "Teste.h"
-#include "Cheltuiala.h"
+#include "ui.h"
 
 using namespace std;
 
 int main()
 {
-	teste();
+	//teste();
+
+	Service service;
+	UI ui(service);
+
+	ui.runUI();
 
 	return 0;
 }

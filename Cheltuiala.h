@@ -5,7 +5,7 @@ using namespace std;
 
 class Cheltuiala {
 private:
-	int id; // id-ul cheltuielii
+	int id; // id-ul cheltuielii, valoarea implicita este -1
 	int numar;   //numarul apartamentului
 	int suma;    //suma cheltuielii
 	char* tip;   //tipul cheltuielii(dintr-o lista predefinita)
